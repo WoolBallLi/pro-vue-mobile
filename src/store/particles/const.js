@@ -1,0 +1,9 @@
+
+export const GETPOSITION = 'GETPOSITION'
+export const SETPOSITION = 'SETPOSITION'
+export const SETTITLE = 'SETTITLE'
+export const SETTITLEBYROUTE = 'SETTITLEBYROUTE'
+
+export const LOGIN = 'LOGIN'
+
+export const CHANGEUSERINFO = 'CHANGEUSERINFO'

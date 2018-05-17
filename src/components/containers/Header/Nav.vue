@@ -28,7 +28,7 @@ export default {
         {id:1,title:'首页',path:'/home'},
         {id:2,title:'影片',path:'/films'},
         {id:3,title:'商城',path:'/shop'},
-        {id:4,title:'我的',path:'/mineinfo'},
+        // {id:4,title:'我的',path:'/mineinfo'},
         {id:5,title:'购物车',path:'/shopcar'},
         {id:6,title:'二级路由示例',path:'/second'}
       ]

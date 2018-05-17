@@ -7,7 +7,7 @@
             <p class="desc"> {{info.masterName}}</p>
 
             <p class="info">
-                <span class="price">{{info.skuList[0].price}}</span>
+                <span class="price">{{info.skuList[0].price | money}}</span>
                 <span class="sale">已售{{info.skuList[0].salesCount}}</span>
             </p>
         </router-link>

@@ -4,7 +4,7 @@
       <ul>
           <li v-for="good in cars" :key="good.id">
               <div class="left name">
-                  {{good.name}}--{{good.price}}
+                  {{good.name}}--{{good.price | money}}
               </div>
               <div class="right">
                    <button @click="CONSTROL_CAR_GOODS({
@@ -18,7 +18,7 @@
           </li>
       </ul>
         <p>
-            总件数：{{all_info.all_num}}；总价钱：{{all_info.all_price}}；
+            总件数：{{all_info.all_num}}；总价钱：{{all_info.all_price | money}}；
         </p>
     </div>
 </template>
@@ -53,10 +53,13 @@ export default {
 
 <style lang="scss" scoped>
   
-    .app-shop-detail {
-      
-        
+    div{
+        font-size: 18px;
+        background: #fff;
     }
-
+p{
+    margin-top: 10px;
+    background: aqua;
+}
 </style>
 

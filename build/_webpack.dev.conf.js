@@ -10,50 +10,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
-//配置express服务器
-let express = require("express");
-let apiServer = express();
-let bodyParser = require("body-parser");
-apiServer.use(bodyParser.urlencoded({extended: true}));
-apiServer.use(bodyParser.json());
-let MongoClient = require('mongodb').MongoClient;
-let DB_CONN_STR = 'mongodb://localhost:27017/test';
-let apiRouter = express.Router(); //配置路由
-apiServer.use("/api", apiRouter);
-
-let dataS = {};
-let movie = () => {
-  let selectData = function (db, callback) {
-    //连接数据库
-    let dbS = db.db("test");
-    //连接到表
-    let collection = dbS.collection('dytt');
-    collection.find({}).toArray(function (err, result) {
-      if (err) {
-        console.log('Error:' + err);
-        return;
-      }
-      callback(result);
-    });
-  };
-  MongoClient.connect(DB_CONN_STR, function (err, db) {
-    console.log("连接成功！");
-    selectData(db, function (result) {
-      db.close();
-      console.log(result[0]);
-      dataS = result[0];
-    });
-  });
-  return dataS;
-};
-
+const express = require("express");
+//引入express
+const app = express()    
+//引入router
+const apiRoutes = express.Router();    
+//使用body-parser，对json数据处理，可在后面配置router接口的时候，对req和res进行数据处理
+var bodyParser = require('body-parser')        
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+//引入servers下的index.js文件，并全局传入apiRoutes
+const api = require('../server/index')(apiRoutes);        
+app.use('/api', apiRoutes);
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap, usePostCSS: true})
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
@@ -63,7 +40,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        {from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html')},
+        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
     hot: true,
@@ -73,20 +50,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
     overlay: config.dev.errorOverlay
-      ? {warnings: false, errors: true}
+      ? { warnings: false, errors: true }
       : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    },
-    before(app){
-      app.get("/api/giveData", (req, res) => {
-        res.json({
-          data: movie().data
-        })
-      });
     }
   },
   plugins: [

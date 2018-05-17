@@ -24,3 +24,21 @@ Vue.filter('day',function (value) {
     return '星期'+result
 })
 
+Vue.filter('money',function (value) {
+    var f = parseFloat(value);
+    if (isNaN(f)) {
+        return false;
+    }
+    var f = Math.round(value)/100;
+    var s = f.toString();
+    var rs = s.indexOf('.');
+    if (rs < 0) {
+        rs = s.length;
+        s += '.';
+    }
+    while (s.length <= rs + 2) {
+        s += '0';
+    }
+    return s;
+})
+

@@ -16,7 +16,7 @@ let mutations = {
     [SETTITLEBYROUTE] (state,route) {
         let title = ''
         switch(route.name){
-            case 'home':title = '卖座电影';break;
+            case 'home':title = '毕业设计';break;
             case 'films':title = '查看影片';break;
             case '404':title = 'Not Found';break;
             case 'login':title = '登陆';break;

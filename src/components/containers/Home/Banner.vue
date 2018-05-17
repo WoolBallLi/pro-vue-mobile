@@ -23,7 +23,23 @@ export default {
   methods:{
       getBillBoards(){
           this.$store.dispatch(GET_BILLBOARDS)
-      }
+      },
+      bannerSwiper() {
+      this.$nextTick(function() {
+        new Swiper(".swiper-container", {
+          autoplay: {
+            delay: 2000,
+            stopOnLastSlide: false,
+            disableOnInteraction: false
+          },
+          // speed:1000,
+          loop: true,
+          pagination: {
+            el: ".swiper-pagination"
+          }
+        });
+      });
+    }
   },
   computed: {
       ...mapState({
@@ -34,9 +50,7 @@ export default {
       this.getBillBoards()
   },
   updated () {
-      new Swiper('.app-home-banner',{
-          loop:true
-      })
+      this.bannerSwiper()
   }
 }
 </script>
